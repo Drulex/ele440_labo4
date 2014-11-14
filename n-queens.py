@@ -1,4 +1,8 @@
 class Board:
+	'''
+	Board class represents the chessboard and methods available to manipulate it.
+	'''
+
 	def __init__(self, N):
 		'''
 		We create a 2d array (list of lists) of size N x N
@@ -20,6 +24,11 @@ class Board:
 		'''
 		self.board[x][y] = 'Q'
 
+
+def build_board_from_file(infile):
+	'''
+	Function to import text file and build chess board based on params
+	'''
 
 
 
