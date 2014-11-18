@@ -14,8 +14,10 @@ class Board:
 		'''
 		Print the current board
 		'''
+		print '----------------------------------------'
 		for row in self.board:
 			print row
+		print '----------------------------------------'
 
 
 	def add_queen(self, x, y):
@@ -25,11 +27,18 @@ class Board:
 		self.board[x][y] = 'Q'
 
 
-def build_board_from_solution(sol):
+def build_board_from_solution(N, sol):
 	'''
 	Function to build board from solution array
 	'''
-
+	#  We create board object
+	board = Board(N)
+	#  We add the queens on the board
+	for i in xrange(len(sol)):
+		board.add_queen(i, sol[i])
+	#  We print the board
+	board.print_board()
+	return board
 
 
 def parse_input_data(infile):
@@ -43,9 +52,9 @@ def parse_input_data(infile):
 		N = int(f.readline())
 		sol_array = []
 		for line in f.readlines():
-			#  for each line we split and convert values to int before adding to array
+			#  For each line we split and convert values to int before adding to array
 			sol = [int(x) for x in line.split()]
-			#  if array is not empty we append it to array of solutions
+			#  If array is not empty we append it to array of solutions
 			if sol:
 				sol_array.append(sol)
 		return N, sol_array
@@ -53,10 +62,7 @@ def parse_input_data(infile):
 
 
 if __name__ == '__main__':
-	#b = Board(10)
-	#b.add_queen(3, 8)
-	#b.print_board()
 	infile = 'fichierTest-20-8.txt'
 	N, solutions = parse_input_data(infile)
-	print N
-	print solutions
+	for i in xrange(len(solutions)):
+		build_board_from_solution(N, solutions[i])
