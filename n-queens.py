@@ -33,9 +33,11 @@ def build_board_from_solution(N, sol):
 	'''
 	#  We create board object
 	board = Board(N)
+
 	#  We add the queens on the board
 	for i in xrange(len(sol)):
 		board.add_queen(i, sol[i])
+
 	#  We print the board
 	board.print_board()
 	return board
@@ -52,8 +54,10 @@ def parse_input_data(infile):
 		N = int(f.readline())
 		sol_array = []
 		for line in f.readlines():
+
 			#  For each line we split and convert values to int before adding to array
 			sol = [int(x) for x in line.split()]
+
 			#  If array is not empty we append it to array of solutions
 			if sol:
 				sol_array.append(sol)
