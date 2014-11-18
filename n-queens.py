@@ -25,14 +25,38 @@ class Board:
 		self.board[x][y] = 'Q'
 
 
-def build_board_from_file(infile):
+def build_board_from_solution(sol):
 	'''
-	Function to import text file and build chess board based on params
+	Function to build board from solution array
 	'''
+
+
+
+def parse_input_data(infile):
+	'''
+	Function parse data from input file
+	Saves the solutions in an array of arrays called sol_array
+	Returns N and sol_array
+	'''
+	with open(infile, 'r') as f:
+		nsol = int(f.readline())
+		N = int(f.readline())
+		sol_array = []
+		for line in f.readlines():
+			#  for each line we split and convert values to int before adding to array
+			sol = [int(x) for x in line.split()]
+			#  if array is not empty we append it to array of solutions
+			if sol:
+				sol_array.append(sol)
+		return N, sol_array
 
 
 
 if __name__ == '__main__':
-	b = Board(10)
-	b.add_queen(3, 8)
-	b.print_board()
+	#b = Board(10)
+	#b.add_queen(3, 8)
+	#b.print_board()
+	infile = 'fichierTest-20-8.txt'
+	N, solutions = parse_input_data(infile)
+	print N
+	print solutions
