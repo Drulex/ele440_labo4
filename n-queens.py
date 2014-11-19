@@ -76,7 +76,6 @@ def calc_conflict(sol, xpos, ypos):
 	k = 1
 	for j in xrange(xpos + 1, len(sol)):
 		if sol[j] == ypos + k:
-			print
 			conflict_count += 1
 		if sol[j] == ypos - k:
 			conflict_count += 1
@@ -93,10 +92,10 @@ def calc_fitness(sol):
 	conflicts = 0
 
 	#  for every queen starting from the first column (most left)
-	#  we calculate the number of conflicts and increment
+	#  we calculate the number of conflicts and increment it
 	for i in xrange(0, len(sol)):
 		conflicts += calc_conflict(sol, i, sol[i])
-	return conflicts
+	return -conflicts
 
 
 if __name__ == '__main__':
@@ -104,7 +103,7 @@ if __name__ == '__main__':
 	#N, solutions = parse_input_data(infile)
 	#build_board_from_solution(N, solutions[0])
 	#print solutions[0]
-	sol = [1, 3, 4, 2, 1, 7, 5, 0]
+	sol1 = [1, 3, 4, 2, 1, 7, 5, 0]
 	sol2 = [6, 4, 2, 0, 5, 7, 1, 3]
-	build_board_from_solution(8, sol2)
-	print 'fitness: ', calc_fitness(sol2)
+	build_board_from_solution(8, sol1)
+	print 'fitness=', calc_fitness(sol1)
