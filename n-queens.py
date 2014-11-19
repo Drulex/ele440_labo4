@@ -100,10 +100,7 @@ def calc_fitness(sol):
 
 if __name__ == '__main__':
 	infile = 'fichierTest-20-8.txt'
-	#N, solutions = parse_input_data(infile)
-	#build_board_from_solution(N, solutions[0])
-	#print solutions[0]
-	sol1 = [1, 3, 4, 2, 1, 7, 5, 0]
-	sol2 = [6, 4, 2, 0, 5, 7, 1, 3]
-	build_board_from_solution(8, sol1)
-	print 'fitness=', calc_fitness(sol1)
+	N, solutions = parse_input_data(infile)
+	for s in solutions:
+		build_board_from_solution(N, s)
+		print 'fitness =', calc_fitness(s)
