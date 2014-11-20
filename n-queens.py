@@ -43,7 +43,7 @@ class Board:
 		'''
 		Function to calculate number of conflicts AT THE RIGHT SIDE
 		of a given queen. This cannot be used to calculate all conflicts
-		of a queen, but it is used when iteraing queens from left to right
+		of a queen, but it is used when iterating queens from left to right
 		on a given board
 		'''
 		conflict_count = 0
@@ -72,9 +72,9 @@ class Board:
 		return -conflicts
 
 
-	def check_if_valid(self):
+	def check_if_optimal(self):
 		'''
-		Check if current chessboard is a valid solution to the problem
+		Check if current chessboard is a optimal solution to the problem
 		'''
 		if self.calc_fitness == 0:
 			return True
@@ -115,11 +115,6 @@ def create_population(N, solutions):
 
 
 
-def recombine_simple(sol1, sol2):
-	'''
-	'''
-
-
 if __name__ == '__main__':
 	infile = 'fichierTest-20-8.txt'
 	N, solutions = parse_input_data(infile)
@@ -128,5 +123,5 @@ if __name__ == '__main__':
 	for board in population:
 		board.print_board()
 		print board.calc_fitness()
-		print board.check_if_valid()
+		print board.check_if_optimal()
 
