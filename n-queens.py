@@ -82,6 +82,16 @@ class Board:
 			return False
 
 
+class Population:
+	'''
+	Class used to manipulation population
+	'''
+
+	def __init__(self, N, solutions):
+		self.population = []
+		for s in solutions:
+			self.population.append(Board(N, s))
+
 
 def parse_input_data(infile):
 	'''
@@ -104,23 +114,13 @@ def parse_input_data(infile):
 		return N, sol_array
 
 
-def create_population(N, solutions):
-	'''
-	Creates a population array that includes all solutions
-	'''
-	population = []
-	for s in solutions:
-		population.append(Board(N, s))
-	return population
-
-
 
 if __name__ == '__main__':
 	infile = 'fichierTest-20-8.txt'
 	N, solutions = parse_input_data(infile)
-	population = create_population(N, solutions)
+	Pop = Population(N, solutions)
 
-	for board in population:
+	for board in Pop.population:
 		board.print_board()
 		print board.calc_fitness()
 		print board.check_if_optimal()
