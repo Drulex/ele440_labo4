@@ -83,7 +83,6 @@ class Board:
 
 
 
-
 def parse_input_data(infile):
 	'''
 	Function parse data from input file
@@ -105,14 +104,28 @@ def parse_input_data(infile):
 		return N, sol_array
 
 
+def create_population(N, solutions):
+	'''
+	Creates a population array that includes all solutions
+	'''
+	population = []
+	for s in solutions:
+		population.append(Board(N, s))
+	return population
+
+
+
+def recombine_simple(sol1, sol2):
+	'''
+	'''
+
 
 if __name__ == '__main__':
 	infile = 'fichierTest-20-8.txt'
 	N, solutions = parse_input_data(infile)
-	b_sol = []
-	for s in solutions:
-		b_sol.append(Board(N, s))
-	for board in b_sol:
+	population = create_population(N, solutions)
+
+	for board in population:
 		board.print_board()
 		print board.calc_fitness()
 		print board.check_if_valid()
