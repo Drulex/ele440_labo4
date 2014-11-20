@@ -76,7 +76,10 @@ class Board:
 		'''
 		Check if current chessboard is a valid solution to the problem
 		'''
-		pass
+		if self.calc_fitness == 0:
+			return True
+		else:
+			return False
 
 
 
@@ -103,11 +106,6 @@ def parse_input_data(infile):
 
 
 
-
-
-
-
-
 if __name__ == '__main__':
 	infile = 'fichierTest-20-8.txt'
 	N, solutions = parse_input_data(infile)
@@ -117,4 +115,5 @@ if __name__ == '__main__':
 	for board in b_sol:
 		board.print_board()
 		print board.calc_fitness()
+		print board.check_if_valid()
 
