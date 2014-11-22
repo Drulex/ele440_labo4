@@ -267,25 +267,32 @@ def check_for_optimal(pop):
             sys.exit(1)
 
 
+class Printer():
+    """
+    Print things to stdout on one line dynamically
+    """
+    def __init__(self,data):
+        sys.stdout.write("\r\x1b[K"+data.__str__())
+        sys.stdout.flush()
 
 if __name__ == '__main__':
     iterations = 0
     infile = 'fichierTest-20-8.txt'
-    XOVER_PROB = 0.6
-    MUTATION_PROB = 0.8
+    XOVER_PROB = 0.4
+    MUTATION_PROB = 0.5
     N, solutions = parse_input_data(infile)
     Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
     generations = []
     avg_fitness = []
-    Pop.print_stats()
-    while iterations < 2000:
+    while iterations < 100000:
+        print_iterations = 'Iteration=%i' % iterations
+        Printer(print_iterations)
         params = Pop.get_graph_params()
         generations.append(params[0])
         avg_fitness.append(params[1])
         check_for_optimal(Pop)
         next_generation = Pop.build_new_population()
         Pop.regenerate_population(next_generation)
-        Pop.print_stats()
         iterations += 1
 
     graph_fitness_over_time(generations, avg_fitness)
