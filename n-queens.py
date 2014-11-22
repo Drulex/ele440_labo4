@@ -85,8 +85,10 @@ class Population:
     Class used to manipulation population object
     '''
 
-    def __init__(self, N, solutions):
+    def __init__(self, N, solutions, xover_prob, mutation_prob):
         self.N = N
+        self.xover_probability = xover_prob
+        self.mutation_probability = mutation_prob
         self.population = []
         self.solutions = solutions
         self.fitness_dict = {}
