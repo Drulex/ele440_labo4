@@ -89,6 +89,7 @@ class Population:
         self.solutions = solutions
         self.fitness_dict = {}
         self.create_population(N)
+        self.probabilities = self.get_probability_list()
 
     def create_population(self, N):
         '''
@@ -100,6 +101,25 @@ class Population:
         for s in self.population:
             self.fitness_dict.update({s: s.calc_fitness()})
 
+    def get_probability_list(self):
+        '''
+        Create a list that with probability for a solution to be selected depending
+        on its fitness.
+        ---------------------------------------------
+        Formula used:
+
+        Pi = probability of a solution to be selected
+        Fi = fitness of a solution
+        Tfit = sum of fitness value of all solutions
+
+        Pi = Fi / Tfit
+        =---------------------------------------------
+        '''
+        fitness = self.fitness_dict.values()
+        total_fitness = float(sum(fitness))
+        relative_fitness = [f/total_fitness for f in fitness]
+        probabilities = [sum(relative_fitness[:i+1]) for i in range(len(relative_fitness))]
+        return probabilities
     def two_points_crossover(self, sol1, sol2):
         '''
         Function to execute 2 points crossover on 2 chromosomes
