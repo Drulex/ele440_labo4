@@ -215,6 +215,12 @@ class Population:
         for key in self.fitness_dict:
             print key.sol, self.fitness_dict[key]
 
+    def get_graph_params(self):
+        params = []
+        params.append(self.generation)
+        params.append(np.mean(self.fitness_dict.values()))
+        return params
+
 
 def parse_input_data(infile):
     '''
