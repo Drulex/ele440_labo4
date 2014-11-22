@@ -171,9 +171,24 @@ class Population:
         '''
         new_population = []
         while len(new_population) < len(self.solutions):
+            x = random()
+            y = random()
+
+            #  we select parents for recombination using roulette wheel method
             parents = self.roulette_wheel_select()
-            children = list(self.two_points_crossover(parents[0], parents[1]))
-            #mutate()
+
+            #  check probability of crossover
+            if x <= self.xover_probability:
+                children = list(self.two_points_crossover(parents[0], parents[1]))
+            else:
+                children = parents
+
+            #  check probability of mutation
+            if y <= self.mutation_probability:
+                self.mutate_child(children[0])
+                self.mutate_child(children[1])
+
+            #  add children to new population
             new_population.append(children[0])
             new_population.append(children[1])
         return new_population
