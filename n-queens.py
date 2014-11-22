@@ -87,14 +87,18 @@ class Population:
     def __init__(self, N, solutions):
         self.population = []
         self.solutions = solutions
+        self.fitness_dict = {}
         self.create_population(N)
 
     def create_population(self, N):
         '''
         Take each solution and create board
+        Also create fitness_dict: a dictionnary containing {solution: fitness}
         '''
         for s in self.solutions:
             self.population.append(Board(N, s))
+        for s in self.population:
+            self.fitness_dict.update({s: s.calc_fitness()})
 
     def two_points_crossover(self, sol1, sol2):
         '''
