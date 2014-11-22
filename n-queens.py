@@ -154,6 +154,13 @@ class Population:
         sol1[pt1:pt2], sol2[pt1:pt2] = sol2[pt1:pt2], sol1[pt1:pt2]
         return sol1, sol2
 
+    def mutate_child(self, sol):
+        '''
+        This function randomly selects 2 bits in the solutions and swaps them
+        '''
+        r = sample(sol, 2)
+        sol[r[0]], sol[r[1]] = sol[r[1]], sol[r[0]]
+
     def build_new_population(self):
         '''
         Creates a new population by doing:
