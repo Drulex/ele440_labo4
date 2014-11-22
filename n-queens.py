@@ -215,19 +215,20 @@ def parse_input_data(infile):
 
 def check_for_optimal(pop):
     for b in pop.population:
-        print b.calc_fitness()
         if b.check_if_optimal() is True:
             print "FOUND OPTIMAL SOLUTION"
             sys.exit(1)
 
 
+
 if __name__ == '__main__':
+    iterations = 0
     infile = 'fichierTest-20-8.txt'
     N, solutions = parse_input_data(infile)
     Pop = Population(N, solutions)
-    iterations = 0
-    while iterations < 10000:
-        print 'iteration=', iterations
+    while iterations < 100:
         check_for_optimal(Pop)
-        Pop.recombine()
+        next_generation = Pop.build_new_population()
+        Pop.regenerate_population(next_generation)
+        Pop.print_stats()
         iterations += 1
