@@ -151,16 +151,22 @@ class Population:
         sol1[pt1:pt2], sol2[pt1:pt2] = sol2[pt1:pt2], sol1[pt1:pt2]
         return sol1, sol2
 
-    def recombine(self):
+    def build_new_population(self):
         '''
-        Recombination algorithm. Selects 2 solutions at random and recombines them
-        We may choose the crossover function we want
+        Creates a new population by doing:
+            1. Selection (select 2 parents)
+            2. Crossover (recombine them to create children)
+            3. Mutation (mutate children)
+            4. Repeat until new population is same size as previous generation
         '''
-        #  we select 2 solutions at random
-        randi = sample(xrange(len(self.population)), 2)
-
-        #  we recombine them using 2 points crossover
-        self.two_points_crossover(self.solutions[randi[0]], self.solutions[randi[1]])
+        new_population = []
+        while len(new_population) < len(self.solutions):
+            parents = self.roulette_wheel_select()
+            children = list(self.two_points_crossover(parents[0], parents[1]))
+            #mutate()
+            new_population.append(children[0])
+            new_population.append(children[1])
+        return new_population
 
 
 
