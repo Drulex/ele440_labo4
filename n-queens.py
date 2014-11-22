@@ -1,4 +1,5 @@
-from random import randint, sample
+from random import randint, sample, random
+import numpy as np
 import sys
 
 class Board:
