@@ -190,8 +190,11 @@ class Population:
                 self.mutate_child(children[1])
 
             #  add children to new population
-            new_population.append(children[0])
-            new_population.append(children[1])
+            if len(set(children[0])) == len(children[0]):
+                new_population.append(children[0])
+
+            if len(set(children[1])) == len(children[1]):
+                new_population.append(children[1])
         return new_population
 
     def regenerate_population(self, new_population):
@@ -275,7 +278,7 @@ if __name__ == '__main__':
     generations = []
     avg_fitness = []
     Pop.print_stats()
-    while iterations < 200:
+    while iterations < 2000:
         params = Pop.get_graph_params()
         generations.append(params[0])
         avg_fitness.append(params[1])
