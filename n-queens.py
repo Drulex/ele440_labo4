@@ -169,6 +169,17 @@ class Population:
             new_population.append(children[1])
         return new_population
 
+    def regenerate_population(self, new_population):
+        '''
+        This function mutates the current Population object to the new generation.
+        This uses less memory than creating new population objects each iteration.
+        '''
+        self.solutions = new_population
+        self.population = []
+        self.fitness_dict = {}
+        self.create_population(self.N)
+        self.probabilities = self.get_probability_list()
+        self.generation += 1
 
 
 
