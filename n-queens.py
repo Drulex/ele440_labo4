@@ -122,6 +122,20 @@ class Population:
         relative_fitness = [f/total_fitness for f in fitness]
         probabilities = [sum(relative_fitness[:i+1]) for i in range(len(relative_fitness))]
         return probabilities
+
+    def roulette_wheel_select(self):
+        '''
+        Implementation of roulette wheel selection algorithm
+        '''
+        selected = []
+        for n in xrange(2):
+            r = random()
+            for (i, individual) in enumerate(self.solutions):
+                if r <= self.probabilities[i]:
+                    selected.append(list(individual))
+                    break
+        return selected
+
     def two_points_crossover(self, sol1, sol2):
         '''
         Function to execute 2 points crossover on 2 chromosomes
