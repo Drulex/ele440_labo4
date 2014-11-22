@@ -85,11 +85,13 @@ class Population:
     '''
 
     def __init__(self, N, solutions):
+        self.N = N
         self.population = []
         self.solutions = solutions
         self.fitness_dict = {}
         self.create_population(N)
         self.probabilities = self.get_probability_list()
+        self.generation = 1
 
     def create_population(self, N):
         '''
