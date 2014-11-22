@@ -181,6 +181,15 @@ class Population:
         self.probabilities = self.get_probability_list()
         self.generation += 1
 
+    def print_stats(self):
+        '''
+        Print relevant stats
+        '''
+        print "Generation:", self.generation
+        print 'Average fitness:', np.mean(self.fitness_dict.values())
+        print "Population:"
+        for key in self.fitness_dict:
+            print key.sol, self.fitness_dict[key]
 
 
 def parse_input_data(infile):
