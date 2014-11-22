@@ -149,6 +149,7 @@ class Population:
             pt1, pt2 = pt2, pt1
 
         sol1[pt1:pt2], sol2[pt1:pt2] = sol2[pt1:pt2], sol1[pt1:pt2]
+        return sol1, sol2
 
     def recombine(self):
         '''
