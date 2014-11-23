@@ -65,7 +65,6 @@ def check_for_optimal(pop):
     '''
     for b in pop.population:
         if b.check_if_optimal() is True:
-            print 'FOUND OPTIMAL SOLUTION'
             return b.sol
 
 
@@ -125,6 +124,5 @@ if __name__ == '__main__':
             iterations += 1
 
         #  graph evolution of fitness over time
-        graph_fitness_over_time(data)
-        if optimal_solutions:
-            clean_optimal_solutions(optimal_solutions)
+        #graph_fitness_over_time(data)
+        Pop.print_stats()

@@ -31,7 +31,7 @@ class Population:
         self.probabilities = self.get_probability_list()
 
         #  attribute representing generation
-        self.generation = 1
+        self.generation = 0
 
     def create_population(self, N):
         '''
@@ -204,11 +204,18 @@ class Population:
         '''
         Print relevant stats
         '''
-        print "Generation:", self.generation
-        print 'Average fitness:', np.mean(self.fitness_dict.values())
-        print "Population:"
-        for key in self.fitness_dict:
-            print key.sol, self.fitness_dict[key]
+        print
+        print '================================================='
+        print 'Statistiques:'
+        print 'Nombre de reines:', self.N
+        print 'Taille de la population:', len(self.population)
+        print 'Nombre de generations:', self.generation
+        print 'Probabilite de recombinaison:', self.xover_probability
+        print 'Probabilite de mutation:', self.mutation_probability
+        print 'Fitness de la meilleure solution: TODO'
+        print 'Temps de calcul: TODO'
+        print '================================================='
+
 
     def get_graph_params(self):
         params = {}
