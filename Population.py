@@ -117,6 +117,36 @@ class Population:
 
         return sol
 
+    def xover(self, sol1, sol2):
+        '''
+        Crossover function that breeds 2 parents the following way:
+            1. If two parents have common board positions they are transferred to child
+            2. Rest of positions are randomly generated (with no duplicates)
+        '''
+        #  if both solutions are the same we randomize one of them
+        if sol1 == sol2:
+            sol2 = self.generate_random_solution()
+
+        #  list with possible values of queens
+        possible = [i for i in range(len(sol1))]
+
+        #  child chromosome
+        child = [-1 for i in range(len(sol1))]
+
+        #  if a position is common to both solutions we keep it
+        for i in range(len(sol1)):
+            if(sol1[i] == sol2[i]):
+                child[i] = sol1[i]
+                possible.remove(child[i])
+
+        #  we randomize rest of positions
+        for i in range(len(sol1)):
+            if(child[i] == -1):
+                child[i] = choice(possible)
+                possible.remove(child[i])
+
+        return child
+
     def mutate_child(self, sol):
         '''
         This function randomly selects 2 bits in the solutions and swaps them
