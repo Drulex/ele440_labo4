@@ -60,10 +60,24 @@ def graph_fitness_over_time(data):
 
 
 def check_for_optimal(pop):
+    '''
+    Checks if current populations contains an optimal solution
+    '''
     for b in pop.population:
         if b.check_if_optimal() is True:
-            print "FOUND OPTIMAL SOLUTION"
-            return b
+            print 'FOUND OPTIMAL SOLUTION'
+            return b.sol
+
+
+def clean_optimal_solutions(opt_sol):
+    '''
+    Takes all solutions found and keeps only the unique ones
+    '''
+    real_solutions = set(tuple(sol) for sol in opt_sol)
+    print 'Total solutions found:', len(real_solutions)
+    for s in real_solutions:
+        print s
+    return real_solutions
 
 
 class Printer():
@@ -97,7 +111,9 @@ if __name__ == '__main__':
             data.update(params)
 
             #  check if an optimal solution exists in population
-            optimal_solutions.append(check_for_optimal(Pop))
+            opt = check_for_optimal(Pop)
+            if opt is not None:
+                optimal_solutions.append(opt)
 
             #  create the next generation
             next_generation = Pop.build_new_population()
@@ -111,6 +127,4 @@ if __name__ == '__main__':
         #  graph evolution of fitness over time
         graph_fitness_over_time(data)
         if optimal_solutions:
-            print 'Solutions optimales:'
-            for s in optimal_solutions:
-                print s
+            clean_optimal_solutions(optimal_solutions)
