@@ -91,6 +91,19 @@ class Population:
         sol1[pt1:pt2], sol2[pt1:pt2] = sol2[pt1:pt2], sol1[pt1:pt2]
         return sol1, sol2
 
+    def generate_random_solution(self):
+        '''
+        This function generates a random chromosome while making sure
+        we don't have two queens on the same row
+        '''
+        #  generate list with N values in order
+        sol = [i for i in range(self.N)]
+
+        #  shuffle the list
+        shuffle(sol)
+
+        return sol
+
     def mutate_child(self, sol):
         '''
         This function randomly selects 2 bits in the solutions and swaps them
