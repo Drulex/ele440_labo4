@@ -76,27 +76,37 @@ class Printer():
 
 
 if __name__ == '__main__':
-    iterations = 0
-    infile = 'fichierTest-20-8.txt'
-    XOVER_PROB = 0.4
-    MUTATION_PROB = 0.5
-    N, solutions = parse_input_data(infile)
-    Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
-    generations = []
-    avg_fitness = []
-    optimal_solutions = []
-    while iterations < 10000:
-        print_iterations = 'Iteration=%i' % iterations
-        Printer(print_iterations)
-        params = Pop.get_graph_params()
-        generations.append(params[0])
-        avg_fitness.append(params[1])
-        optimal_solutions.append(check_for_optimal(Pop))
-        next_generation = Pop.build_new_population()
-        Pop.regenerate_population(next_generation)
-        iterations += 1
-
-    graph_fitness_over_time(generations, avg_fitness)    arguments = docopt(__doc__, version='1.0')
+    arguments = docopt(__doc__, version='1.0')
     MAX_ITER = int(arguments['<iterations>'])
     XOVER_PROB = float(arguments['<pb_xover>'])
     MUTATION_PROB = float(arguments['<pb_mutation>'])
+
+    if arguments['--import'] is True:
+        INFILE = arguments['<fichier>']
+        N, solutions = parse_input_data(INFILE)
+        Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
+        data = {}
+        optimal_solutions = []
+        iterations = 0
+
+        #  Genetic algorithm loop starts here
+        while iterations < MAX_ITER:
+            print_iterations = 'Iteration=%i' % iterations
+            Printer(print_iterations)
+            params = Pop.get_graph_params()
+            data.update(params)
+
+            #  check if an optimal solution exists in population
+            optimal_solutions.append(check_for_optimal(Pop))
+
+            #  create the next generation
+            next_generation = Pop.build_new_population()
+
+            #  modify the current population to the new one
+            Pop.regenerate_population(next_generation)
+
+            #  increment generations
+            iterations += 1
+
+        #  graph evolution of fitness over time
+        graph_fitness_over_time(data)
