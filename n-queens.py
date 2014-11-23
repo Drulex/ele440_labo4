@@ -1,3 +1,24 @@
+#!/usr/bin/env python
+
+"""
+ELE440 Labo4 - Algorithmes genetiques
+
+Usage:
+  labo3.py --import <fichier> <iterations> <pb_xover> <pb_mutation>
+  labo3.py --generate <N> <iterations> <pb_xover> <pb_mutation>
+
+Options:
+  -h --help             Afficher cet ecran d'aide
+  --version             Afficher la version.
+
+  <fichier>             Fichier d'entree
+  <iterations>          Nombre maximal de generations
+  <N>                   Nombre de reines (taille de l'echiquier)
+  <pb_xover>            Probabilite de recombinaison
+  <pb_mutation>         Probabilite de mutation
+"""
+
+from docopt import docopt
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
@@ -75,4 +96,7 @@ if __name__ == '__main__':
         Pop.regenerate_population(next_generation)
         iterations += 1
 
-    graph_fitness_over_time(generations, avg_fitness)
+    graph_fitness_over_time(generations, avg_fitness)    arguments = docopt(__doc__, version='1.0')
+    MAX_ITER = int(arguments['<iterations>'])
+    XOVER_PROB = float(arguments['<pb_xover>'])
+    MUTATION_PROB = float(arguments['<pb_mutation>'])
