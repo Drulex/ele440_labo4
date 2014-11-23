@@ -35,11 +35,24 @@ class Population:
 
     def create_population(self, N):
         '''
-        Take each solution and create board
+        Take each solution and create board (if no duplicates in sol)
         Also create fitness_dict: a dictionnary containing {solution: fitness}
         '''
+        i = 0
         for s in self.solutions:
-            self.population.append(Board(N, s))
+
+            #  we check if the solution contains duplicates (queens on two rows)
+            if len(s) == len(set(s)):
+                self.population.append(Board(N, s))
+
+            #  if solution contains duplicate we generate another
+            else:
+                s = self.generate_random_solution()
+                self.population.append(Board(N, s))
+                self.solutions[i] = s
+
+            i += 1
+
         for s in self.population:
             self.fitness_dict.update({s: s.calc_fitness()})
 
