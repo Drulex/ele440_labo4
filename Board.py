@@ -70,7 +70,7 @@ class Board:
         '''
         Check if current chessboard is a optimal solution to the problem
         '''
-        if self.calc_fitness == 0:
+        if self.calc_fitness() == 0:
             return True
         else:
             return False
