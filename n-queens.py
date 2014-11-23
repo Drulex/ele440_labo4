@@ -110,3 +110,7 @@ if __name__ == '__main__':
 
         #  graph evolution of fitness over time
         graph_fitness_over_time(data)
+        if optimal_solutions:
+            print 'Solutions optimales:'
+            for s in optimal_solutions:
+                print s
