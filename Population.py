@@ -1,4 +1,4 @@
-from random import randint, sample, random
+from random import randint, sample, random, choice, shuffle
 from Board import Board
 import numpy as np
 
@@ -158,12 +158,14 @@ class Population:
         '''
         Creates a new population by doing:
             1. Selection (select 2 parents)
-            2. Crossover (recombine them to create children)
+            2. Crossover (recombine them to create a child)
             3. Mutation (mutate children)
             4. Repeat until new population is same size as previous generation
         '''
         new_population = []
         while len(new_population) < len(self.solutions):
+
+            #  random params we will measure probabilites of xover and mutation against
             x = random()
             y = random()
 
@@ -172,26 +174,23 @@ class Population:
 
             #  check probability of crossover
             if x <= self.xover_probability:
-                children = list(self.two_points_crossover(parents[0], parents[1]))
+                child = self.xover(parents[0], parents[1])
+            #  if no crossover the child will be one of the two parents
             else:
-                children = parents
-
+                a = choice([0, 1])
+                child = parents[a]
             #  check probability of mutation
             if y <= self.mutation_probability:
-                self.mutate_child(children[0])
-                self.mutate_child(children[1])
+                self.mutate_child(child)
 
             #  add children to new population
-            if len(set(children[0])) == len(children[0]):
-                new_population.append(children[0])
+            new_population.append(child)
 
-            if len(set(children[1])) == len(children[1]):
-                new_population.append(children[1])
         return new_population
 
     def regenerate_population(self, new_population):
         '''
-        This function mutates the current Population object to the new generation.
+        This function mutates the child Population object to the new generation.
         This uses less memory than creating new population objects each iteration.
         '''
         self.solutions = new_population
