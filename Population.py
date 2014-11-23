@@ -156,7 +156,6 @@ class Population:
             print key.sol, self.fitness_dict[key]
 
     def get_graph_params(self):
-        params = []
-        params.append(self.generation)
-        params.append(np.mean(self.fitness_dict.values()))
+        params = {}
+        params.update({self.generation: np.mean(self.fitness_dict.values())})
         return params

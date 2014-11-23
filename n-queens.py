@@ -25,13 +25,13 @@ def parse_input_data(infile):
         return N, sol_array
 
 
-def graph_fitness_over_time(gen, fit):
+def graph_fitness_over_time(data):
     '''
     Print evolution of average fitness over time
     '''
     fig = plt.figure()
     axes = fig.add_axes([0.1, 0.1, 0.8, 0.8]) # left, bottom, width, height (range 0 to 1)
-    axes.plot(gen, fit, 'r')
+    axes.plot(data.keys(), data.values(), 'r')
     axes.set_xlabel('Generation')
     axes.set_ylabel('Average fitness')
     axes.set_title('Evolution of average fitness over time')
