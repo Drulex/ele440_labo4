@@ -61,18 +61,6 @@ class Population:
             self.all_fitness_results.append(s.calc_fitness())
 
 
-    def roulette_wheel_select(self):
-        '''
-        Implementation of roulette wheel selection algorithm
-        '''
-        selected = []
-        for n in xrange(2):
-            r = random()
-            for (i, individual) in enumerate(self.solutions):
-                if r <= self.probabilities[i]:
-                    selected.append(list(individual))
-                    break
-        return selected
 
     def two_points_crossover(self, sol1, sol2):
         '''
