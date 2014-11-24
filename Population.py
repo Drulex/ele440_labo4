@@ -209,6 +209,18 @@ class Population:
         Returns best fitness ever calculated
         '''
         return max(self.all_fitness_results)
+def calc_fitness(sol):
+        '''
+        Function to calculate fitness function of a solution
+        '''
+        conflicts = 0
+
+        #  for every queen starting from the first column (most left)
+        #  we calculate the number of conflicts and increment it
+        for i in xrange(0, len(sol)):
+            conflicts += calc_conflict(sol, i, sol[i])
+        return -conflicts
+
 def check_if_optimal(sol):
         '''
         Check if a solution is the optimal solution to the problem
