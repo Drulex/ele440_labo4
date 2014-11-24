@@ -24,6 +24,9 @@ class Population:
         #  dictionnary containing solutions and their corresponding fitness value
         self.fitness_dict = {}
 
+        #  list to hold all fitness results
+        self.all_fitness_results = []
+
         #  create board objects with each solution
         self.create_population(N)
 
@@ -55,6 +58,7 @@ class Population:
 
         for s in self.population:
             self.fitness_dict.update({s: s.calc_fitness()})
+            self.all_fitness_results.append(s.calc_fitness())
 
     def get_probability_list(self):
         '''
@@ -190,7 +194,7 @@ class Population:
 
     def regenerate_population(self, new_population):
         '''
-        This function mutates the child Population object to the new generation.
+        This function mutates the Population object to the new generation.
         This uses less memory than creating new population objects each iteration.
         '''
         self.solutions = new_population
@@ -212,12 +216,21 @@ class Population:
         print 'Nombre de generations:', self.generation
         print 'Probabilite de recombinaison:', self.xover_probability
         print 'Probabilite de mutation:', self.mutation_probability
-        print 'Fitness de la meilleure solution: TODO'
+        print 'Fitness de la meilleure solution:', self.get_best_fitness()
         print 'Temps de calcul: TODO'
         print '================================================='
 
 
     def get_graph_params(self):
+        '''
+        Getter method for params used when graphing
+        '''
         params = {}
         params.update({self.generation: np.mean(self.fitness_dict.values())})
         return params
+
+    def get_best_fitness(self):
+        '''
+        Returns best fitness ever calculated
+        '''
+        return max(self.all_fitness_results)
