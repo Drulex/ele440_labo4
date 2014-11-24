@@ -209,3 +209,11 @@ class Population:
         Returns best fitness ever calculated
         '''
         return max(self.all_fitness_results)
+def check_if_optimal(sol):
+        '''
+        Check if a solution is the optimal solution to the problem
+        '''
+        if calc_fitness(sol) == 0:
+            return True
+        else:
+            return False
