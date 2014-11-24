@@ -5,7 +5,7 @@ ELE440 Labo4 - Algorithmes genetiques
 
 Usage:
   labo3.py --import <fichier> <iterations> <pb_xover> <pb_mutation>
-  labo3.py --generate <N> <iterations> <pb_xover> <pb_mutation>
+  labo3.py --generate <N> <pop_size> <iterations> <pb_xover> <pb_mutation>
 
 Options:
   -h --help             Afficher cet ecran d'aide
@@ -16,12 +16,14 @@ Options:
   <N>                   Nombre de reines (taille de l'echiquier)
   <pb_xover>            Probabilite de recombinaison
   <pb_mutation>         Probabilite de mutation
+  <pop_size>            Taille de la population
 """
 
 from docopt import docopt
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+from random import shuffle
 from Population import Population
 
 
@@ -66,6 +68,18 @@ def check_for_optimal(pop):
     for b in pop.population:
         if b.check_if_optimal() is True:
             return b.sol
+
+def generate_population(N, pop_size):
+    '''
+    Generates a random population based on user input
+    '''
+    population = []
+    for i in xrange(pop_size):
+        solution = [x for x in range(N)]
+        shuffle(solution)
+        population.append(solution)
+
+    return population
 
 
 def clean_optimal_solutions(opt_sol):
@@ -122,7 +136,36 @@ if __name__ == '__main__':
 
             #  increment generations
             iterations += 1
+    elif arguments['--generate'] is True:
+        N = int(arguments['<N>'])
+        pop_size = int(arguments['<pop_size>'])
+        solutions = generate_population(N, pop_size)
+        Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
+        data = {}
+        optimal_solutions = []
+        iterations = 0
 
-        #  graph evolution of fitness over time
-        #graph_fitness_over_time(data)
-        Pop.print_stats()
+        #  Genetic algorithm loop starts here
+        while iterations < MAX_ITER:
+            print_iterations = 'Iteration=%i' % iterations
+            Printer(print_iterations)
+            params = Pop.get_graph_params()
+            data.update(params)
+
+            #  check if an optimal solution exists in population
+            opt = check_for_optimal(Pop)
+            if opt is not None:
+                optimal_solutions.append(opt)
+
+            #  create the next generation
+            next_generation = Pop.build_new_population()
+
+            #  modify the current population to the new one
+            Pop.regenerate_population(next_generation)
+
+            #  increment generations
+            iterations += 1
+
+    Pop.print_stats()
+    clean_optimal_solutions(optimal_solutions)
+    graph_fitness_over_time(data)
