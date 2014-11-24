@@ -15,23 +15,20 @@ class Population:
         self.xover_probability = xover_prob
         self.mutation_probability = mutation_prob
 
-        #  list containing solution in Board object form
+        #  list containing solutions in Board object form
         self.population = []
 
         #  list containing solutions in list form
         self.solutions = solutions
 
-        #  dictionnary containing solutions and their corresponding fitness value
-        self.fitness_dict = {}
+        #  list of fitness values
+        self.fitness_vals = []
 
         #  list to hold all fitness results
         self.all_fitness_results = []
 
         #  create board objects with each solution
         self.create_population(N)
-
-        #  list of relative fitness values
-        self.probabilities = self.get_probability_list()
 
         #  attribute representing generation
         self.generation = 0
@@ -46,22 +43,20 @@ class Population:
 
             #  we check if the solution contains duplicates (queens on two rows)
             if len(s) == len(set(s)):
-                self.population.append(Board(N, s))
+                self.population.append(s)
 
             #  if solution contains duplicate we generate another
             else:
                 s = self.generate_random_solution()
-                self.population.append(Board(N, s))
+                self.population.append(s)
                 self.solutions[i] = s
 
             i += 1
 
         for s in self.population:
-            self.fitness_dict.update({s: s.calc_fitness()})
-            self.all_fitness_results.append(s.calc_fitness())
-
-
-
+            fit_val = calc_fitness(s)
+            self.fitness_vals.append(fit_val)
+            self.all_fitness_results.append(fit_val)
 
     def generate_random_solution(self):
         '''
@@ -73,7 +68,6 @@ class Population:
 
         #  shuffle the list
         shuffle(sol)
-
         return sol
 
     def xover(self, sol1, sol2):
@@ -165,7 +159,7 @@ class Population:
         size = len(self.population)/2
 
         #  return most fit half
-        return s2[size:]
+        return self.solutions[size:]
 
     def regenerate_population(self, new_population):
         '''
@@ -174,9 +168,8 @@ class Population:
         '''
         self.solutions = new_population
         self.population = []
-        self.fitness_dict = {}
+        self.fitness_vals = []
         self.create_population(self.N)
-        self.probabilities = self.get_probability_list()
         self.generation += 1
 
     def print_stats(self):
@@ -195,13 +188,12 @@ class Population:
         print 'Temps de calcul: TODO'
         print '================================================='
 
-
     def get_graph_params(self):
         '''
         Getter method for params used when graphing
         '''
         params = {}
-        params.update({self.generation: np.mean(self.fitness_dict.values())})
+        params.update({self.generation: np.mean(self.fitness_vals)})
         return params
 
     def get_best_fitness(self):
@@ -209,6 +201,7 @@ class Population:
         Returns best fitness ever calculated
         '''
         return max(self.all_fitness_results)
+
 
 
 def calc_conflict(sol, xpos, ypos):
@@ -229,6 +222,8 @@ def calc_conflict(sol, xpos, ypos):
                 conflict_count += 1
             k += 1
         return conflict_count
+
+
 def calc_fitness(sol):
         '''
         Function to calculate fitness function of a solution
@@ -240,6 +235,7 @@ def calc_fitness(sol):
         for i in xrange(0, len(sol)):
             conflicts += calc_conflict(sol, i, sol[i])
         return -conflicts
+
 
 def check_if_optimal(sol):
         '''

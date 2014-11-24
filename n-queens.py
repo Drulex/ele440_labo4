@@ -24,7 +24,7 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from random import shuffle
-from Population import Population
+from Population import Population, check_if_optimal
 
 
 def parse_input_data(infile):
@@ -66,8 +66,8 @@ def check_for_optimal(pop):
     Checks if current populations contains an optimal solution
     '''
     for b in pop.population:
-        if b.check_if_optimal() is True:
-            return b.sol
+        if check_if_optimal(b) is True:
+            return b
 
 def generate_population(N, pop_size):
     '''
@@ -114,7 +114,7 @@ if __name__ == '__main__':
         Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
         data = {}
         optimal_solutions = []
-        iterations = 0
+        iterations = 1
 
         #  Genetic algorithm loop starts here
         while iterations < MAX_ITER:
@@ -136,6 +136,7 @@ if __name__ == '__main__':
 
             #  increment generations
             iterations += 1
+
     elif arguments['--generate'] is True:
         N = int(arguments['<N>'])
         pop_size = int(arguments['<pop_size>'])
