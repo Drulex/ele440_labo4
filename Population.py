@@ -167,22 +167,25 @@ class Population:
             4. Repeat until new population is same size as previous generation
         '''
         new_population = []
+        alpha_parents = self.get_alpha_parents()
+        size = len(alpha_parents) - 1
+
+        for p in alpha_parents:
+            new_population.append(p)
+
         while len(new_population) < len(self.solutions):
 
             #  random params we will measure probabilites of xover and mutation against
             x = random()
             y = random()
 
-            #  we select parents for recombination using roulette wheel method
-            parents = self.roulette_wheel_select()
-
             #  check probability of crossover
             if x <= self.xover_probability:
-                child = self.xover(parents[0], parents[1])
+                child = self.xover(alpha_parents[randint(0, size)], alpha_parents[randint(0, size)])
             #  if no crossover the child will be one of the two parents
             else:
-                a = choice([0, 1])
-                child = parents[a]
+                a = randint(0, size)
+                child = alpha_parents[a]
             #  check probability of mutation
             if y <= self.mutation_probability:
                 self.mutate_child(child)
@@ -206,6 +209,7 @@ class Population:
 
         #  return most fit half
         return s2[size:]
+
     def regenerate_population(self, new_population):
         '''
         This function mutates the Population object to the new generation.
