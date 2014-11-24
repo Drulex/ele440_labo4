@@ -192,6 +192,20 @@ class Population:
 
         return new_population
 
+    def get_alpha_parents(self):
+        '''
+        This function returns 50 percent of most fit parents
+        The new generation will be composed of these parents and
+        offspring after they are crossed and chidrend are mutate_child
+        '''
+
+        #  sort in ascending order of fitness
+        s1 = sorted(self.fitness_dict, key=self.fitness_dict.get)
+        s2 = [i.sol for i in s1]
+        size = len(self.population)/2
+
+        #  return most fit half
+        return s2[size:]
     def regenerate_population(self, new_population):
         '''
         This function mutates the Population object to the new generation.
