@@ -209,6 +209,26 @@ class Population:
         Returns best fitness ever calculated
         '''
         return max(self.all_fitness_results)
+
+
+def calc_conflict(sol, xpos, ypos):
+        '''
+        Function to calculate number of conflicts AT THE RIGHT SIDE
+        of a given queen. This cannot be used to calculate all conflicts
+        of a queen, but it is used when iterating queens from left to right
+        on a given board
+        '''
+        conflict_count = 0
+        k = 1
+        for j in xrange(xpos + 1, len(sol)):
+            if sol[j] == ypos + k:
+                conflict_count += 1
+            if sol[j] == ypos - k:
+                conflict_count += 1
+            if sol[j] == ypos:
+                conflict_count += 1
+            k += 1
+        return conflict_count
 def calc_fitness(sol):
         '''
         Function to calculate fitness function of a solution
