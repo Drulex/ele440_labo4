@@ -157,9 +157,11 @@ class Population:
         offspring after they are crossed and chidrend are mutate_child
         '''
 
-        #  sort in ascending order of fitness
-        s1 = sorted(self.fitness_dict, key=self.fitness_dict.get)
-        s2 = [i.sol for i in s1]
+        #  reorder solutions and fitness_vals lists
+        sorted_zip = sorted(zip(self.fitness_vals, self.solutions))
+        self.solutions = [x for (y, x) in sorted_zip]
+        self.fitness_vals = [y for (y, x) in sorted_zip]
+
         size = len(self.population)/2
 
         #  return most fit half
