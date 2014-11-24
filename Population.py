@@ -62,20 +62,6 @@ class Population:
 
 
 
-    def two_points_crossover(self, sol1, sol2):
-        '''
-        Function to execute 2 points crossover on 2 chromosomes
-        '''
-        size = min(len(sol1), len(sol2))
-        pt1 = randint(1, size)
-        pt2 = randint(1, size - 1)
-        if pt2 >= pt1:
-            pt2 += 1
-        else: # Swap the two cx points
-            pt1, pt2 = pt2, pt1
-
-        sol1[pt1:pt2], sol2[pt1:pt2] = sol2[pt1:pt2], sol1[pt1:pt2]
-        return sol1, sol2
 
     def generate_random_solution(self):
         '''
