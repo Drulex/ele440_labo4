@@ -70,6 +70,15 @@ class Population:
         shuffle(sol)
         return sol
 
+    def one_point_xover(self, sol1, sol2):
+        size = self.N
+        pt = randint(0, size -1)
+        child = [None] * self.N
+        child[0:pt] = sol1[0:pt]
+        child[pt:] = sol2[pt:]
+
+        return child
+
     def xover(self, sol1, sol2):
         '''
         Crossover function that breeds 2 parents the following way:
@@ -80,20 +89,25 @@ class Population:
         if sol1 == sol2:
             sol2 = self.generate_random_solution()
 
+        x = random()
+        if x < self.xover_probability:
+            child = self.one_point_xover(sol1, sol2)
+            return child
+
         #  list with possible values of queens
-        possible = [i for i in range(len(sol1))]
+        possible = [i for i in xrange(self.N)]
 
         #  child chromosome
-        child = [-1 for i in range(len(sol1))]
+        child = [-1 for i in xrange(self.N)]
 
         #  if a position is common to both solutions we keep it
-        for i in range(len(sol1)):
+        for i in xrange(len(sol1)):
             if(sol1[i] == sol2[i]):
                 child[i] = sol1[i]
                 possible.remove(child[i])
 
         #  we randomize rest of positions
-        for i in range(len(sol1)):
+        for i in xrange(len(sol1)):
             if(child[i] == -1):
                 child[i] = choice(possible)
                 possible.remove(child[i])
