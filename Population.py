@@ -31,7 +31,7 @@ class Population:
         self.create_population(N)
 
         #  attribute representing generation
-        self.generation = 0
+        self.generation = 1
 
     def create_population(self, N):
         '''
