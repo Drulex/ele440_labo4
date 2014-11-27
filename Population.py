@@ -1,6 +1,6 @@
 from random import randint, sample, random, choice, shuffle
-from Board import Board
 import numpy as np
+
 
 class Population:
     '''
@@ -72,7 +72,7 @@ class Population:
 
     def one_point_xover(self, sol1, sol2):
         size = self.N
-        pt = randint(0, size -1)
+        pt = randint(0, size - 1)
         child = [None] * self.N
         child[0:pt] = sol1[0:pt]
         child[pt:] = sol2[pt:]
@@ -215,7 +215,6 @@ class Population:
         Returns best fitness ever calculated
         '''
         return max(self.all_fitness_results)
-
 
 
 def calc_conflict(sol, xpos, ypos):
