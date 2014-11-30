@@ -11,6 +11,8 @@ class Population:
         #  number of queens
         self.N = N
 
+        self.baro = 1
+
         #  probability constants
         self.xover_probability = xover_prob
         self.mutation_probability = mutation_prob
@@ -40,13 +42,16 @@ class Population:
         '''
         i = 0
         for s in self.solutions:
+            self.baro += 1
 
             #  we check if the solution contains duplicates (queens on two rows)
             if len(s) == len(set(s)):
+                self.baro += 1
                 self.population.append(s)
 
             #  if solution contains duplicate we generate another
             else:
+                self.baro += 1
                 s = self.generate_random_solution()
                 self.population.append(s)
                 self.solutions[i] = s
@@ -54,7 +59,9 @@ class Population:
             i += 1
 
         for s in self.population:
-            fit_val = calc_fitness(s)
+            self.baro += 1
+            fit_val, b = calc_fitness(s)
+            self.baro += b
             self.fitness_vals.append(fit_val)
             self.all_fitness_results.append(fit_val)
 
@@ -65,6 +72,11 @@ class Population:
         '''
         #  generate list with N values in order
         sol = [i for i in range(self.N)]
+
+        #  because of list comprehension we have to increment the barometer
+        #  counter here
+        for i in range(self.N):
+            self.baro += 1
 
         #  shuffle the list
         shuffle(sol)
@@ -87,6 +99,7 @@ class Population:
         '''
         #  if both solutions are the same we randomize one of them
         if sol1 == sol2:
+            self.baro += 1
             sol2 = self.generate_random_solution()
 
         x = random()
@@ -101,14 +114,18 @@ class Population:
         child = [-1 for i in xrange(self.N)]
 
         #  if a position is common to both solutions we keep it
-        for i in xrange(len(sol1)):
+        for i in range(len(sol1)):
+            self.baro += 3  # because of 2 list comprehension above
             if(sol1[i] == sol2[i]):
+                self.baro += 1
                 child[i] = sol1[i]
                 possible.remove(child[i])
 
         #  we randomize rest of positions
-        for i in xrange(len(sol1)):
+        for i in range(len(sol1)):
+            self.baro += 1
             if(child[i] == -1):
+                self.baro += 1
                 child[i] = choice(possible)
                 possible.remove(child[i])
 
@@ -118,6 +135,7 @@ class Population:
         '''
         This function randomly selects 2 bits in the solutions and swaps them
         '''
+        self.baro += 1
         r = sample(sol, 2)
         sol[r[0]], sol[r[1]] = sol[r[1]], sol[r[0]]
 
@@ -134,9 +152,11 @@ class Population:
         size = len(alpha_parents) - 1
 
         for p in alpha_parents:
+            self.baro += 1
             new_population.append(p)
 
         while len(new_population) < len(self.solutions):
+            self.baro += 1
 
             #  random params we will measure probabilites of xover and mutation against
             x = random()
@@ -144,13 +164,16 @@ class Population:
 
             #  check probability of crossover
             if x <= self.xover_probability:
+                self.baro += 1
                 child = self.xover(alpha_parents[randint(0, size)], alpha_parents[randint(0, size)])
             #  if no crossover the child will be one of the two parents
             else:
+                self.baro += 1
                 a = randint(0, size)
                 child = alpha_parents[a]
             #  check probability of mutation
             if y <= self.mutation_probability:
+                self.baro += 1
                 self.mutate_child(child)
 
             #  add children to new population
@@ -169,6 +192,9 @@ class Population:
         sorted_zip = sorted(zip(self.fitness_vals, self.solutions))
         self.solutions = [x for (y, x) in sorted_zip]
         self.fitness_vals = [y for (y, x) in sorted_zip]
+
+        for i in sorted_zip:
+            self.baro += 2
 
         size = len(self.population)/2
 
@@ -199,7 +225,7 @@ class Population:
         print 'Probabilite de recombinaison:', self.xover_probability
         print 'Probabilite de mutation:', self.mutation_probability
         print 'Fitness de la meilleure solution:', self.get_best_fitness()
-        print 'Temps de calcul: TODO'
+        print 'Temps de calcul:', self.get_barometer_count()
         print '================================================='
 
     def get_graph_params(self):
@@ -209,6 +235,9 @@ class Population:
         params = {}
         params.update({self.generation: np.mean(self.fitness_vals)})
         return params
+
+    def get_barometer_count(self):
+        return self.baro
 
     def get_best_fitness(self):
         '''
@@ -224,17 +253,22 @@ def calc_conflict(sol, xpos, ypos):
         of a queen, but it is used when iterating queens from left to right
         on a given board
         '''
+        baro = 0
         conflict_count = 0
         k = 1
         for j in xrange(xpos + 1, len(sol)):
+            baro += 1
             if sol[j] == ypos + k:
+                baro += 1
                 conflict_count += 1
             if sol[j] == ypos - k:
+                baro += 1
                 conflict_count += 1
             if sol[j] == ypos:
+                baro += 1
                 conflict_count += 1
             k += 1
-        return conflict_count
+        return conflict_count, baro
 
 
 def calc_fitness(sol):
@@ -242,19 +276,23 @@ def calc_fitness(sol):
         Function to calculate fitness function of a solution
         '''
         conflicts = 0
+        baro = 0
 
         #  for every queen starting from the first column (most left)
         #  we calculate the number of conflicts and increment it
         for i in xrange(0, len(sol)):
-            conflicts += calc_conflict(sol, i, sol[i])
-        return -conflicts
+            c, b = calc_conflict(sol, i, sol[i])
+            conflicts += c
+            baro += b
+        return -conflicts, baro
 
 
 def check_if_optimal(sol):
         '''
         Check if a solution is the optimal solution to the problem
         '''
-        if calc_fitness(sol) == 0:
+        res, b = calc_fitness(sol)
+        if res == 0:
             return True
         else:
             return False
