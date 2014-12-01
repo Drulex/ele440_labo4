@@ -60,17 +60,6 @@ def graph_fitness_over_time(data):
     plt.show()
 
 
-def check_for_optimal(pop):
-    '''
-    Checks if current populations contains an optimal solution
-    '''
-    for b in pop.population:
-        if check_if_optimal(b) is True:
-            return b
-        else:
-            return None
-
-
 def generate_population(N, pop_size):
     '''
     Generates a random population based on user input
@@ -82,20 +71,6 @@ def generate_population(N, pop_size):
         population.append(solution)
 
     return population
-
-
-def clean_optimal_solutions(opt_sol):
-    '''
-    Takes all solutions found and keeps only the unique ones
-    '''
-    unique_solutions = []
-    for sol in opt_sol:
-        if sol not in unique_solutions:
-            unique_solutions.append(sol)
-    print 'Found %i solutions!' % len(unique_solutions)
-    for s in unique_solutions:
-        print s
-    return unique_solutions
 
 
 def export_optimal_solutions(unique_solutions, outfile):
@@ -138,11 +113,6 @@ if __name__ == '__main__':
             params = Pop.get_graph_params()
             data.update(params)
 
-            #  check if an optimal solution exists in population
-            opt = check_for_optimal(Pop)
-            if opt is not None:
-                optimal_solutions.append(opt)
-
             #  create the next generation
             next_generation = Pop.build_new_population()
 
@@ -169,11 +139,6 @@ if __name__ == '__main__':
             params = Pop.get_graph_params()
             data.update(params)
 
-            #  check if an optimal solution exists in population
-            opt = check_for_optimal(Pop)
-            if opt is not None:
-                optimal_solutions.append(opt)
-
             #  create the next generation
             next_generation = Pop.build_new_population()
 
@@ -185,6 +150,8 @@ if __name__ == '__main__':
 
     Pop.print_stats()
     Pop.export_stats('results.txt')
-    unique_solutions = clean_optimal_solutions(optimal_solutions)
-    export_optimal_solutions(unique_solutions, 'optimal_solutions.txt')
+    if Pop.optimal_solutions:
+        print 'Found %i solutions' %len(Pop.optimal_solutions)
+        for s in Pop.optimal_solutions:
+            print s
     graph_fitness_over_time(data)

@@ -20,6 +20,9 @@ class Population:
         #  list containing solutions in Board object form
         self.population = []
 
+        #  list containing optimal solutions
+        self.optimal_solutions = []
+
         #  list containing solutions in list form
         self.solutions = solutions
 
@@ -35,10 +38,11 @@ class Population:
         #  attribute representing generation
         self.generation = 1
 
+
+
     def create_population(self, N):
         '''
-        Take each solution and create board (if no duplicates in sol)
-        Also create fitness_dict: a dictionnary containing {solution: fitness}
+        Take each solution and add to population (if no duplicates in sol)
         '''
         i = 0
         for s in self.solutions:
@@ -61,6 +65,9 @@ class Population:
         for s in self.population:
             self.baro += 1
             fit_val, b = calc_fitness(s)
+            if fit_val == 0:
+                if s not in self.optimal_solutions:
+                    self.optimal_solutions.append(s)
             self.baro += b
             self.fitness_vals.append(fit_val)
             self.all_fitness_results.append(fit_val)
@@ -186,7 +193,7 @@ class Population:
         '''
         This function returns 50 percent of most fit parents
         The new generation will be composed of these parents and
-        offspring after they are crossed and chidrend are mutate_child
+        offspring after they are crossed
         '''
 
         #  reorder solutions and fitness_vals lists
