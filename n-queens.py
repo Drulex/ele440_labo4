@@ -21,7 +21,6 @@ Options:
 
 from docopt import docopt
 import sys
-import numpy as np
 import matplotlib.pyplot as plt
 from random import shuffle
 from Population import Population, check_if_optimal
@@ -53,7 +52,7 @@ def graph_fitness_over_time(data):
     Print evolution of average fitness over time
     '''
     fig = plt.figure()
-    axes = fig.add_axes([0.1, 0.1, 0.8, 0.8]) # left, bottom, width, height (range 0 to 1)
+    axes = fig.add_axes([0.1, 0.1, 0.8, 0.8])
     axes.plot(data.keys(), data.values(), 'r')
     axes.set_xlabel('Generation')
     axes.set_ylabel('Average fitness')
@@ -68,6 +67,7 @@ def check_for_optimal(pop):
     for b in pop.population:
         if check_if_optimal(b) is True:
             return b
+
 
 def generate_population(N, pop_size):
     '''
@@ -93,11 +93,18 @@ def clean_optimal_solutions(opt_sol):
     return real_solutions
 
 
+def export_optimal_solutions(real_solutions, outfile):
+    with open(outfile, 'w') as f:
+        for s in real_solutions:
+            f.write(str(s).strip('(').strip(')'))
+            f.write('\n')
+
+
 class Printer():
     """
     Print things to stdout on one line dynamically
     """
-    def __init__(self,data):
+    def __init__(self, data):
         sys.stdout.write("\r\x1b[K"+data.__str__())
         sys.stdout.flush()
 
@@ -168,5 +175,7 @@ if __name__ == '__main__':
             iterations += 1
 
     Pop.print_stats()
-    clean_optimal_solutions(optimal_solutions)
+    Pop.export_stats('results.txt')
+    real_solutions = clean_optimal_solutions(optimal_solutions)
+    export_optimal_solutions(real_solutions, 'optimal_solutions.txt')
     graph_fitness_over_time(data)
