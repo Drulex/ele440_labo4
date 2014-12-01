@@ -52,9 +52,9 @@ class Population:
             #  if solution contains duplicate we generate another
             else:
                 self.baro += 1
-                s = self.generate_random_solution()
-                self.population.append(s)
-                self.solutions[i] = s
+                s1 = self.generate_random_solution()
+                self.population.append(s1)
+                self.solutions[i] = s1
 
             i += 1
 
@@ -138,6 +138,7 @@ class Population:
         self.baro += 1
         r = sample(sol, 2)
         sol[r[0]], sol[r[1]] = sol[r[1]], sol[r[0]]
+        return sol
 
     def build_new_population(self):
         '''
@@ -175,7 +176,6 @@ class Population:
             if y <= self.mutation_probability:
                 self.baro += 1
                 child = self.mutate_child(child[:])
-                self.mutate_child(child)
 
             #  add children to new population
             new_population.append(child)

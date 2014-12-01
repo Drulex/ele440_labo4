@@ -33,7 +33,7 @@ def parse_input_data(infile):
     Returns N and sol_array
     '''
     with open(infile, 'r') as f:
-        nsol = int(f.readline())
+        f.readline()
         N = int(f.readline())
         sol_array = []
         for line in f.readlines():
@@ -67,6 +67,8 @@ def check_for_optimal(pop):
     for b in pop.population:
         if check_if_optimal(b) is True:
             return b
+        else:
+            return None
 
 
 def generate_population(N, pop_size):
@@ -86,16 +88,22 @@ def clean_optimal_solutions(opt_sol):
     '''
     Takes all solutions found and keeps only the unique ones
     '''
-    real_solutions = set(tuple(sol) for sol in opt_sol)
-    print 'Total solutions found:', len(real_solutions)
-    for s in real_solutions:
+    unique_solutions = []
+    for sol in opt_sol:
+        if sol not in unique_solutions:
+            unique_solutions.append(sol)
+    print 'Found %i solutions!' % len(unique_solutions)
+    for s in unique_solutions:
         print s
-    return real_solutions
+    return unique_solutions
 
 
-def export_optimal_solutions(real_solutions, outfile):
+def export_optimal_solutions(unique_solutions, outfile):
+    '''
+    Write the optimal solutions found to a different text file
+    '''
     with open(outfile, 'w') as f:
-        for s in real_solutions:
+        for s in unique_solutions:
             f.write(str(s).strip('(').strip(')'))
             f.write('\n')
 
@@ -144,6 +152,7 @@ if __name__ == '__main__':
             #  increment generations
             iterations += 1
 
+
     elif arguments['--generate'] is True:
         N = int(arguments['<N>'])
         pop_size = int(arguments['<pop_size>'])
@@ -176,6 +185,6 @@ if __name__ == '__main__':
 
     Pop.print_stats()
     Pop.export_stats('results.txt')
-    real_solutions = clean_optimal_solutions(optimal_solutions)
-    export_optimal_solutions(real_solutions, 'optimal_solutions.txt')
+    unique_solutions = clean_optimal_solutions(optimal_solutions)
+    export_optimal_solutions(unique_solutions, 'optimal_solutions.txt')
     graph_fitness_over_time(data)
