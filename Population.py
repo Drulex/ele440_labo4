@@ -174,6 +174,7 @@ class Population:
             #  check probability of mutation
             if y <= self.mutation_probability:
                 self.baro += 1
+                child = self.mutate_child(child[:])
                 self.mutate_child(child)
 
             #  add children to new population
