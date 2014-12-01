@@ -228,6 +228,20 @@ class Population:
         print 'Temps de calcul:', self.get_barometer_count()
         print '================================================='
 
+    def export_stats(self, outfile):
+        '''
+        Function to export stats to text file.
+        '''
+        with open(outfile, 'w') as f:
+            f.write('Statistiques:\n')
+            f.write('Nombre de reines: %i\n' % self.N)
+            f.write('Taille de la population: %i\n' % len(self.population))
+            f.write('Nombre de generation: %i\n' % self.generation)
+            f.write('Probabilite de recombinaison: %f\n' % self.xover_probability)
+            f.write('Probabilite de mutation: %f\n' % self.mutation_probability)
+            f.write('Fitness de la meilleure solution: %i\n' % self.get_best_fitness())
+            f.write('Temps de calcul: %i' % self.get_barometer_count())
+
     def get_graph_params(self):
         '''
         Getter method for params used when graphing
