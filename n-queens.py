@@ -23,6 +23,7 @@ from docopt import docopt
 import sys
 from random import shuffle
 from Population import Population
+import datetime
 
 
 def parse_input_data(infile):
@@ -82,6 +83,13 @@ class Printer():
 
 
 if __name__ == '__main__':
+
+    #  create timestamp
+    timestamp = datetime.datetime.now()
+    #  human readable format
+    timestamp = timestamp.strftime("%Y-%m-%d_%H:%M:%S")
+
+    # parse argumentst
     arguments = docopt(__doc__, version='1.0')
     MAX_ITER = int(arguments['<iterations>'])
     XOVER_PROB = float(arguments['<pb_xover>'])
@@ -93,6 +101,7 @@ if __name__ == '__main__':
         Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
         optimal_solutions = []
         iterations = 1
+
 
         #  Genetic algorithm loop starts here
         while iterations < MAX_ITER:
@@ -131,10 +140,13 @@ if __name__ == '__main__':
             #  increment generations
             iterations += 1
 
+    outfile_stats = 'out_N%iP%i_%s.txt' %(N, len(solutions), timestamp)
+    outfile_sols = 'out_solutions_N%iP%i_%s.txt' %(N, len(solutions), timestamp)
+
     Pop.print_stats()
     if Pop.optimal_solutions:
         print 'Found %i solutions' %len(Pop.optimal_solutions)
         for s in Pop.optimal_solutions:
             print s
-    Pop.export_stats('results.txt')
-    Pop.export_optimal_solutions('solutions.txt')
+    Pop.export_stats(outfile_stats)
+    Pop.export_optimal_solutions(outfile_sols)
