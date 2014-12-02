@@ -250,6 +250,19 @@ class Population:
             f.write('Fitness de la meilleure solution: %i\n' % self.get_best_fitness())
             f.write('Temps de calcul: %i' % self.get_barometer_count())
 
+    def export_optimal_solutions(self, outfile):
+    '''
+    Write the optimal solutions found to a different text file
+    '''
+    with open(outfile, 'w') as f:
+        if self.optimal_solutions:
+            for s in unique_solutions:
+                f.write(str(s).strip('(').strip(')'))
+                f.write('\n')
+        else:
+            f.write('No solutions found')
+
+
     def get_graph_params(self):
         '''
         Getter method for params used when graphing

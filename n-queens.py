@@ -73,16 +73,6 @@ def generate_population(N, pop_size):
     return population
 
 
-def export_optimal_solutions(unique_solutions, outfile):
-    '''
-    Write the optimal solutions found to a different text file
-    '''
-    with open(outfile, 'w') as f:
-        for s in unique_solutions:
-            f.write(str(s).strip('(').strip(')'))
-            f.write('\n')
-
-
 class Printer():
     """
     Print things to stdout on one line dynamically
@@ -149,9 +139,10 @@ if __name__ == '__main__':
             iterations += 1
 
     Pop.print_stats()
-    Pop.export_stats('results.txt')
     if Pop.optimal_solutions:
         print 'Found %i solutions' %len(Pop.optimal_solutions)
         for s in Pop.optimal_solutions:
             print s
+    Pop.export_stats('results.txt')
+    Pop.export_optimal_solutions('solutions.txt')
     graph_fitness_over_time(data)
