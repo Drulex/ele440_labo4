@@ -251,16 +251,16 @@ class Population:
             f.write('Temps de calcul: %i' % self.get_barometer_count())
 
     def export_optimal_solutions(self, outfile):
-    '''
-    Write the optimal solutions found to a different text file
-    '''
-    with open(outfile, 'w') as f:
-        if self.optimal_solutions:
-            for s in unique_solutions:
-                f.write(str(s).strip('(').strip(')'))
-                f.write('\n')
-        else:
-            f.write('No solutions found')
+        '''
+        Write the optimal solutions found to a different text file
+        '''
+        with open(outfile, 'w') as f:
+            if self.optimal_solutions:
+                for s in self.optimal_solutions:
+                    f.write(str(s).strip('(').strip(')'))
+                    f.write('\n')
+            else:
+                f.write('No solutions found')
 
 
     def get_graph_params(self):
