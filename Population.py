@@ -1,5 +1,4 @@
 from random import randint, sample, random, choice, shuffle
-import numpy as np
 
 
 class Population:
@@ -261,15 +260,6 @@ class Population:
                     f.write('\n')
             else:
                 f.write('No solutions found')
-
-
-    def get_graph_params(self):
-        '''
-        Getter method for params used when graphing
-        '''
-        params = {}
-        params.update({self.generation: np.mean(self.fitness_vals)})
-        return params
 
     def get_barometer_count(self):
         return self.baro

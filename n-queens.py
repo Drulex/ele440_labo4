@@ -21,9 +21,8 @@ Options:
 
 from docopt import docopt
 import sys
-import matplotlib.pyplot as plt
 from random import shuffle
-from Population import Population, check_if_optimal
+from Population import Population
 
 
 def parse_input_data(infile):
@@ -92,7 +91,6 @@ if __name__ == '__main__':
         INFILE = arguments['<fichier>']
         N, solutions = parse_input_data(INFILE)
         Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
-        data = {}
         optimal_solutions = []
         iterations = 1
 
@@ -100,8 +98,6 @@ if __name__ == '__main__':
         while iterations < MAX_ITER:
             print_iterations = 'Iteration=%i' % iterations
             Printer(print_iterations)
-            params = Pop.get_graph_params()
-            data.update(params)
 
             #  create the next generation
             next_generation = Pop.build_new_population()
@@ -118,7 +114,6 @@ if __name__ == '__main__':
         pop_size = int(arguments['<pop_size>'])
         solutions = generate_population(N, pop_size)
         Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
-        data = {}
         optimal_solutions = []
         iterations = 0
 
@@ -126,8 +121,6 @@ if __name__ == '__main__':
         while iterations < MAX_ITER:
             print_iterations = 'Iteration=%i' % iterations
             Printer(print_iterations)
-            params = Pop.get_graph_params()
-            data.update(params)
 
             #  create the next generation
             next_generation = Pop.build_new_population()
@@ -145,4 +138,3 @@ if __name__ == '__main__':
             print s
     Pop.export_stats('results.txt')
     Pop.export_optimal_solutions('solutions.txt')
-    graph_fitness_over_time(data)
