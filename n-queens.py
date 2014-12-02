@@ -87,7 +87,7 @@ if __name__ == '__main__':
     #  create timestamp
     timestamp = datetime.datetime.now()
     #  human readable format
-    timestamp = timestamp.strftime("%Y-%m-%d_%H:%M:%S")
+    timestamp = timestamp.strftime("%Y-%m-%d_%H-%M-%S")
 
     # parse argumentst
     arguments = docopt(__doc__, version='1.0')
