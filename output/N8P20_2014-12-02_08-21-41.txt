@@ -1,0 +1,8 @@
+Statistiques:
+Nombre de reines: 8
+Taille de la population: 20
+Nombre de generation: 1000
+Probabilite de recombinaison: 1.000000
+Probabilite de mutation: 1.000000
+Fitness de la meilleure solution: 0
+Temps de calcul: 865139

@@ -89,7 +89,6 @@ if __name__ == '__main__':
         optimal_solutions = []
         iterations = 1
 
-
         #  Genetic algorithm loop starts here
         while iterations < MAX_ITER:
             print_iterations = 'Iteration=%i' % iterations
@@ -103,7 +102,6 @@ if __name__ == '__main__':
 
             #  increment generations
             iterations += 1
-
 
     elif arguments['--generate'] is True:
         N = int(arguments['<N>'])
@@ -127,12 +125,12 @@ if __name__ == '__main__':
             #  increment generations
             iterations += 1
 
-    outfile_stats = 'out_N%iP%i_%s.txt' %(N, len(solutions), timestamp)
-    outfile_sols = 'out_solutions_N%iP%i_%s.txt' %(N, len(solutions), timestamp)
+    outfile_stats = 'output/N%iP%i_%s.txt' % (N, len(solutions), timestamp)
+    outfile_sols = 'output/solutions_N%iP%i_%s.txt' % (N, len(solutions), timestamp)
 
     Pop.print_stats()
     if Pop.optimal_solutions:
-        print 'Found %i solutions' %len(Pop.optimal_solutions)
+        print 'Found %i solutions' % len(Pop.optimal_solutions)
         for s in Pop.optimal_solutions:
             print s
     Pop.export_stats(outfile_stats)
