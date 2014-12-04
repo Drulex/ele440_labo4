@@ -37,8 +37,6 @@ class Population:
         #  attribute representing generation
         self.generation = 1
 
-
-
     def create_population(self, N):
         '''
         Take each solution and add to population (if no duplicates in sol)
@@ -89,6 +87,10 @@ class Population:
         return sol
 
     def one_point_xover(self, sol1, sol2):
+        '''
+        This function selects a bit randomly and slices both parents in two
+        and constructs the children with a half from each parent
+        '''
         size = self.N
         pt = randint(0, size - 1)
         child = [None] * self.N

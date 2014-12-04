@@ -87,7 +87,7 @@ if __name__ == '__main__':
         N, solutions = parse_input_data(INFILE)
         Pop = Population(N, solutions, XOVER_PROB, MUTATION_PROB)
         optimal_solutions = []
-        iterations = 1
+        iterations = 0
 
         #  Genetic algorithm loop starts here
         while iterations < MAX_ITER:
