@@ -35,7 +35,7 @@ class Population:
         self.create_population(N)
 
         #  attribute representing generation
-        self.generation = 1
+        self.generation = 0
 
     def create_population(self, N):
         '''
@@ -148,6 +148,13 @@ class Population:
         sol[r[0]], sol[r[1]] = sol[r[1]], sol[r[0]]
         return sol
 
+    def radiate_child(self, sol):
+        '''
+        Based on a small probability radiate a child with severe mutation
+        '''
+        shuffle(sol)
+        return sol
+
     def build_new_population(self):
         '''
         Creates a new population by doing:
@@ -184,6 +191,10 @@ class Population:
             if y <= self.mutation_probability:
                 self.baro += 1
                 child = self.mutate_child(child[:])
+
+            if y <= 0.005:
+                self.baro += 1
+                child = self.radiate_child(child[:])
 
             #  add children to new population
             new_population.append(child)
