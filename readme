@@ -1,0 +1,48 @@
+Code source pour labo4 de ELE440 - Algorithmes
+
+Ce fichier contient des informations générales ainsi que des instructions.
+
+
+Requirements:
+	- Système dérivé de unix (linux, osx, freebsd. Testé sur Ubuntu 14.04)
+	- Python 2.7.6
+	- Librairie docopt (inlcuse dans ce repertoire)
+
+Infos:
+
+	+ Le programme principal se nomme "n-queens.py".
+	+ Il appele des fonctions définies dans "Population.py".
+	+ Les resultats sont affichés à l'écran
+
+--------------
+Instructions:
+--------------
+Lancer le programme principal de cette facon: ./n-queens.py --help
+
+Ceci va afficher le message d'aide suivant:
+
+ELE440 Labo4 - Algorithmes genetiques
+
+Usage:
+  n-queens.py --import <fichier> <iterations> <pb_xover> <pb_mutation>
+  n-queens.py --generate <N> <pop_size> <iterations> <pb_xover> <pb_mutation>
+
+Options:
+  -h --help             Afficher cet ecran d'aide
+  --version             Afficher la version.
+
+  <fichier>             Fichier d'entree
+  <iterations>          Nombre maximal de generations
+  <N>                   Nombre de reines (taille de l'echiquier)
+  <pb_xover>            Probabilite de recombinaison
+  <pb_mutation>         Probabilite de mutation
+  <pop_size>            Taille de la population
+
+
+----------------------------------------------------------------------------------
+
+Le script peut etre lancé en deux modes:
+	- Génération de population aléatoire.
+	- Importer un fichier texte avec population existante.
+
+Le script va afficher les résultats à l'écran et exporter les resultats dans le dossier "output".
