@@ -4,8 +4,8 @@
 ELE440 Labo4 - Algorithmes genetiques
 
 Usage:
-  labo3.py --import <fichier> <iterations> <pb_xover> <pb_mutation>
-  labo3.py --generate <N> <pop_size> <iterations> <pb_xover> <pb_mutation>
+  n-queens.py --import <fichier> <iterations> <pb_xover> <pb_mutation>
+  n-queens.py --generate <N> <pop_size> <iterations> <pb_xover> <pb_mutation>
 
 Options:
   -h --help             Afficher cet ecran d'aide
